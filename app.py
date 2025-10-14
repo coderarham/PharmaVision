@@ -12,8 +12,12 @@ analyzer = None
 def load_data():
     global analyzer
     try:
-        if os.path.exists('A_Z_medicines_dataset_of_India.csv'):
-            analyzer = MedicineAnalyzer('A_Z_medicines_dataset_of_India.csv')
+        # Get the absolute path to the CSV file
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(BASE_DIR, 'A_Z_medicines_dataset_of_India.csv')
+        
+        if os.path.exists(csv_path):
+            analyzer = MedicineAnalyzer(csv_path)
             return True
     except Exception as e:
         print(f"Error loading data: {e}")
@@ -248,7 +252,7 @@ def get_medicine_details():
         'name': medicine['name'],
         'manufacturer': medicine['manufacturer_name'],
         'composition1': medicine['short_composition1'],
-        'composition2': medicine['short_composition2'] if pd.notna(medicine['short_composition2']) and str(medicine['short_composition2']) != 'nan' else None,
+        'composition2': medicine['short_composition2'] if pd.notna(medicine['short_composition2']) and str(medicine['short_composition2']) != 'nan' else '',
         'price': medicine['price(₹)'],
         'pack_size': medicine['pack_size_label'],
         'type': medicine['type'],
@@ -259,8 +263,12 @@ def get_medicine_details():
     })
 
 if __name__ == '__main__':
+    # Load data on startup
     if load_data():
         print("Data loaded successfully!")
-        app.run(debug=True, host='0.0.0.0', port=5000)
     else:
-        print("Please add 'A_Z_medicines_dataset_of_India.csv' to the directory and restart the app.")
+        print("Failed to load data!")
+    
+    # Run the app
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
