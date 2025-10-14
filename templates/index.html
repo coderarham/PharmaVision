@@ -50,6 +50,43 @@
         .detail-label { font-weight: bold; color: #333; margin-bottom: 5px; }
         .detail-value { color: #666; margin-bottom: 10px; }
         .composition-item { background: #e3f2fd; padding: 8px 12px; margin: 5px 0; border-radius: 5px; border-left: 4px solid #667eea; }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .header { padding: 20px 15px; }
+            .header h1 { font-size: 1.5em; }
+            .section { padding: 15px; margin: 15px 0; }
+            .search-box { padding: 12px; font-size: 16px; }
+            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+            .stat-card { padding: 15px; }
+            .stat-value { font-size: 1.5em; }
+            .chart-container { height: 300px; }
+            .table { font-size: 14px; }
+            .table th, .table td { padding: 8px 4px; }
+            .medicine-card { padding: 12px; margin: 8px 0; }
+            .medicine-name { font-size: 16px; }
+            .medicine-details { font-size: 14px; }
+            .price-tag { padding: 4px 8px; font-size: 12px; }
+            .filter-btn, .clear-btn { padding: 8px 15px; font-size: 13px; }
+            .company-select { min-width: 150px; padding: 8px; }
+            .modal-content { width: 95%; margin: 10% auto; padding: 20px; }
+            .detail-title { font-size: 20px; }
+            .detail-section { padding: 12px; }
+            div[style*="display: flex"] { flex-direction: column; gap: 10px !important; align-items: stretch !important; }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 { font-size: 1.3em; }
+            .section h2 { font-size: 1.2em; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .table { font-size: 12px; }
+            .table th, .table td { padding: 6px 2px; }
+            .medicine-name { font-size: 15px; }
+            .medicine-details { font-size: 13px; }
+            .chart-container { height: 250px; }
+            .modal-content { width: 98%; margin: 5% auto; padding: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -61,7 +98,7 @@
             <div class="search-container">
                 <input type="text" id="searchBox" class="search-box" placeholder="Search medicines, manufacturers, or compositions..." autocomplete="off">
                 
-                <div style="display: flex; gap: 10px; margin-top: 15px; align-items: center;">
+                <div class="filter-controls" style="display: flex; gap: 10px; margin-top: 15px; align-items: center;">
                     <button id="filterBtn" class="filter-btn">🏭 Filter by Company</button>
                     <select id="companyFilter" class="company-select" style="display: none;">
                         <option value="">All Companies</option>
