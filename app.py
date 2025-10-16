@@ -12,13 +12,17 @@ analyzer = None
 def load_data():
     global analyzer
     try:
-        # Get the absolute path to the CSV file
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        # Get the absolute path to the CSV file (safe for Render)
+        BASE_DIR = os.path.abspath(os.path.dirname(__file__))
         csv_path = os.path.join(BASE_DIR, 'A_Z_medicines_dataset_of_India.csv')
         
-        if os.path.exists(csv_path):
-            analyzer = MedicineAnalyzer(csv_path)
-            return True
+        print(f"Looking for dataset at: {csv_path}")
+        if not os.path.exists(csv_path):
+            print("⚠️ CSV file not found at that path")
+            return False
+            
+        analyzer = MedicineAnalyzer(csv_path)
+        return True
     except Exception as e:
         print(f"Error loading data: {e}")
     return False
@@ -251,6 +255,27 @@ def get_medicine_details():
     return jsonify({
         'name': medicine['name'],
         'manufacturer': medicine['manufacturer_name'],
+        'composition1': medicine['short_composition1'],
+        'composition2': medicine['short_composition2'] if pd.notna(medicine['short_composition2']) and str(medicine['short_composition2']) != 'nan' else '',
+        'price': medicine['price(₹)'],
+        'pack_size': medicine['pack_size_label'],
+        'type': medicine['type'],
+        'discontinued': medicine['Is_discontinued'],
+        'id': medicine['id'],
+        'similar_medicines': similar_list,
+        'composition_similar': comp_similar_list
+    })
+
+if __name__ == '__main__':
+    # Load data on startup
+    if load_data():
+        print("Data loaded successfully!")
+    else:
+        print("Failed to load data!")
+    
+    # Run the app
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
         'composition1': medicine['short_composition1'],
         'composition2': medicine['short_composition2'] if pd.notna(medicine['short_composition2']) and str(medicine['short_composition2']) != 'nan' else '',
         'price': medicine['price(₹)'],
