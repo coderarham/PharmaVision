@@ -276,24 +276,3 @@ if __name__ == '__main__':
     # Run the app
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
-        'composition1': medicine['short_composition1'],
-        'composition2': medicine['short_composition2'] if pd.notna(medicine['short_composition2']) and str(medicine['short_composition2']) != 'nan' else '',
-        'price': medicine['price(₹)'],
-        'pack_size': medicine['pack_size_label'],
-        'type': medicine['type'],
-        'discontinued': medicine['Is_discontinued'],
-        'id': medicine['id'],
-        'similar_medicines': similar_list,
-        'composition_similar': comp_similar_list
-    })
-
-if __name__ == '__main__':
-    # Load data on startup
-    if load_data():
-        print("Data loaded successfully!")
-    else:
-        print("Failed to load data!")
-    
-    # Run the app
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
