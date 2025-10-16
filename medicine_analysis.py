@@ -221,7 +221,12 @@ class MedicineAnalyzer:
 # Usage
 if __name__ == "__main__":
     try:
-        analyzer = MedicineAnalyzer('A_Z_medicines_dataset_of_India.csv')
+        import os
+        # Get the absolute path to the CSV file
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(BASE_DIR, 'A_Z_medicines_dataset_of_India.csv')
+        
+        analyzer = MedicineAnalyzer(csv_path)
         analyzer.run_full_analysis()
     except FileNotFoundError:
         print("Error: 'A_Z_medicines_dataset_of_India.csv' file not found!")
